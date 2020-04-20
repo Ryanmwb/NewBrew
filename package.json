@@ -1,0 +1,35 @@
+{
+  "name": "brewbuddy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ryanmwb/NewBrew.git"
+  },
+  "keywords": [
+    "brew",
+    "beer",
+    "brewery"
+  ],
+  "author": "ryanmwb",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ryanmwb/NewBrew/issues"
+  },
+  "homepage": "https://github.com/Ryanmwb/NewBrew#readme",
+  "dependencies": {
+    "axios": "0.19.2",
+    "concurrently": "5.1.0",
+    "create-react-app": "3.4.1",
+    "express": "4.17.1",
+    "path": "0.12.7"
+  }
+}
