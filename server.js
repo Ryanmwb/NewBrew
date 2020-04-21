@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const bodyParser = require("body-parser");
 
 const apis = require("./apis");
 
@@ -8,8 +9,13 @@ const app = express();
 
 // Allow cross-origin
 app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-app.use("/apis", apis);
+app.use("/apis", apis, (error, req, res, done) => {
+  console.log("ROUTE ERR", error);
+  return res.sendStatus(500);
+});
 
 app.use(express.static("public"));
 
