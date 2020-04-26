@@ -15,6 +15,7 @@ function App(props) {
 
   useEffect(() => {
     if (calledApi) return;
+    console.log("process.env.NODE_ENV", process.env.NODE_ENV);
     console.log({ categoriess });
     axios
       .post(`http://localhost:5000/apis/brew/api`, { route: "/categories" })
@@ -31,7 +32,7 @@ function App(props) {
           <div key={category.name}>{category.name}</div>
         ))} */}
       <Router>
-        {/* <nav>
+        <nav>
           <ul>
             <li>
               <Link to="/">Home</Link>
@@ -43,7 +44,7 @@ function App(props) {
               <Link to="/users">Users</Link>
             </li>
           </ul>
-        </nav> */}
+        </nav>
 
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
