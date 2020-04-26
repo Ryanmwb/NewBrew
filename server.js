@@ -33,11 +33,11 @@ app.use("/apis", apis, (error, req, res, done) => {
 //   res.sendFile(path.resolve(__dirname, "client", "public", "index.html"));
 // });
 
-app.use(express.static(path.join(__dirname, "client/build")));
+app.use(express.static(path.join(__dirname, "client", "build")));
 
 // Handle React routing, return all requests to React app
 app.get("*", function(req, res) {
-  res.sendFile(path.join(__dirname, "client/build", "index.html"));
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 
 const PORT = process.env.PORT || 5000;
