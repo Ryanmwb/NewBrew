@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import { CategoriesContext } from "./contexts/categories";
 
-// import "./app.css";
+import "./App.css";
 
 function App(props) {
   const categoriess = useContext(CategoriesContext);
