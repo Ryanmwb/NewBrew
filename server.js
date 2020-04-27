@@ -17,21 +17,7 @@ app.use("/apis", apis, (error, req, res, done) => {
   return res.sendStatus(500);
 });
 
-// if (process.env.NODE_ENV === "production") {
-//   // Serve any static files
-//   app.use(express.static(path.join(__dirname, "client/build")));
-
-//   // Handle React routing, return all requests to React app
-//   app.get("*", function(req, res) {
-//     res.sendFile(path.join(__dirname, "client/build", "index.html"));
-//   });
-// } else {
-
-// }
-
-// app.get("*", (req, res) => {
-//   res.sendFile(path.resolve(__dirname, "client", "public", "index.html"));
-// });
+console.log("process.env.SELF_URL", process.env.SELF_URL);
 
 app.use(express.static(path.join(__dirname, "client", "build")));
 

@@ -1,79 +1,68 @@
-import React, { useEffect, useState, useContext } from "react";
-import axios from "axios";
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import _ from "lodash";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Container, Grid } from "@material-ui/core";
 
-import { CategoriesContext } from "./contexts/categories";
+import Home from "./pages/home";
+import Sidebar from "./components/sidebar";
+import Background from "../src/assets/wood.jpg";
 
 import "./App.css";
 
-function App(props) {
-  const categoriess = useContext(CategoriesContext);
-
-  const [calledApi, setCalledApi] = useState(false);
-  const [categories, setCategories] = useState([]);
-
-  useEffect(() => {
-    if (calledApi) return;
-    console.log("process.env.NODE_ENV", process.env.NODE_ENV);
-    console.log({ categoriess });
-    axios
-      .post(`http://localhost:5000/apis/brew/api`, { route: "/categories" })
-      .then(res => {
-        setCategories(_.get(res, "data", []));
-        setCalledApi(true);
-      })
-      .catch(e => console.log({ e }));
-  });
+function App() {
+  const routes = [
+    {
+      path: "/",
+      exact: true,
+      main: () => <Home />,
+      sideBar: true
+    }
+  ];
 
   return (
-    <div className="app">
-      {/* {categories.map(category => (
-          <div key={category.name}>{category.name}</div>
-        ))} */}
-      <Router>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/about">About</Link>
-            </li>
-            <li>
-              <Link to="/users">Users</Link>
-            </li>
-          </ul>
-        </nav>
+    <div
+      className="app"
+      style={{
+        backgroundImage: `url(${Background})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center"
+      }}
+    >
+      <Container maxWidth="md">
+        <Router>
+          <Switch>
+            {routes.map((route, index) => {
+              function NewComponent() {
+                if (_.get(route, "sideBar", "")) {
+                  return (
+                    <Grid container>
+                      <Grid item xs={3}>
+                        <Sidebar />
+                      </Grid>
+                      <Grid item xs={9}>
+                        <route.main />
+                      </Grid>
+                    </Grid>
+                  );
+                } else {
+                  return <route.main />;
+                }
+              }
 
-        {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
-        <Switch>
-          <Route path="/about">
-            <About />
-          </Route>
-          <Route path="/users">
-            <Users />
-          </Route>
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
-      </Router>
+              return (
+                <Route
+                  key={index}
+                  path={_.get(route, "path", "")}
+                  exact={_.get(route, "exact", "")}
+                  children={<NewComponent />}
+                />
+              );
+            })}
+          </Switch>
+        </Router>
+      </Container>
     </div>
   );
-
-  function Home() {
-    return <h2>Home</h2>;
-  }
-
-  function About() {
-    return <h2>About</h2>;
-  }
-
-  function Users() {
-    return <h2>Users</h2>;
-  }
 }
 
 export default App;
