@@ -1,25 +1,25 @@
 import React from "react";
 import ReactDOM from "react-dom";
+
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { ThemeProvider } from "@material-ui/core/styles";
 
-import { CategoriesContext, categoriesValue } from "./contexts/categories";
 import theme from "./style/theme";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
-import "./index.css";
+import ContextProviders from "./contexts";
 
-console.log({ CategoriesContext });
+import "./index.css";
 
 ReactDOM.render(
   <React.StrictMode>
-    <CategoriesContext.Provider value={categoriesValue}>
+    <ContextProviders>
       <ThemeProvider theme={theme}>
         <App />
         <CssBaseline />
       </ThemeProvider>
-    </CategoriesContext.Provider>
+    </ContextProviders>
   </React.StrictMode>,
   document.getElementById("root")
 );

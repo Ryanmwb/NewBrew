@@ -4,6 +4,7 @@ import _ from "lodash";
 import { Container, Grid } from "@material-ui/core";
 
 import Home from "./pages/home";
+import Category from "./pages/category";
 import Sidebar from "./components/sidebar";
 import Background from "../src/assets/wood.jpg";
 
@@ -15,6 +16,11 @@ function App() {
       path: "/",
       exact: true,
       main: () => <Home />,
+      sideBar: true
+    },
+    {
+      path: "/category/:categoryId",
+      main: () => <Category />,
       sideBar: true
     }
   ];
@@ -53,7 +59,7 @@ function App() {
                 <Route
                   key={index}
                   path={_.get(route, "path", "")}
-                  exact={_.get(route, "exact", "")}
+                  exact={_.get(route, "exact", false)}
                   children={<NewComponent />}
                 />
               );

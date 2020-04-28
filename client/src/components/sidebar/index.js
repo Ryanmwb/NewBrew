@@ -7,15 +7,15 @@ import {
   ListItemIcon,
   ListItemText
 } from "@material-ui/core";
-import InboxIcon from "@material-ui/icons/Inbox";
 import _ from "lodash";
+import InboxIcon from "@material-ui/icons/Inbox";
 
 import useStyles from "./styles";
 import { CategoriesContext } from "../../contexts/categories";
 
-export default function Home() {
+export default function Sidebar() {
   const classes = useStyles();
-  const categories = useContext(CategoriesContext);
+  const { categories } = useContext(CategoriesContext);
 
   const routes = [
     {
@@ -49,11 +49,17 @@ export default function Home() {
       <ListItem>
         <ListItemText primary={"Categories"} />
       </ListItem>
-      {categories.map(category => {
+      {categories.map((category, index) => {
         return (
-          <ListItem button className={classes.subheader}>
-            <ListItemText secondary={category.name} />
-          </ListItem>
+          <Link
+            key={`Sidebar-categories-${index}`}
+            to={`/category/${_.get(category, "id", "")}`}
+            style={{ textDecoration: "none" }}
+          >
+            <ListItem button className={classes.subheader}>
+              <ListItemText secondary={category.name} />
+            </ListItem>
+          </Link>
         );
       })}
     </List>
