@@ -11,6 +11,9 @@ export default makeStyles(theme => {
     card: {
       padding: 16
     },
+    title: {
+      marginTop: 16
+    },
     center: {
       textAlign: "center",
       fontSize: 14

@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+
 import {
   Divider,
   List,
@@ -16,6 +17,7 @@ import { CategoriesContext } from "../../contexts/categories";
 export default function Sidebar() {
   const classes = useStyles();
   const { categories } = useContext(CategoriesContext);
+  const { categoryId } = useParams();
 
   const routes = [
     {
@@ -56,7 +58,15 @@ export default function Sidebar() {
             to={`/category/${_.get(category, "id", "")}`}
             style={{ textDecoration: "none" }}
           >
-            <ListItem button className={classes.subheader}>
+            <ListItem
+              button
+              style={
+                categoryId == _.get(category, "id", "")
+                  ? { background: "#A85839" }
+                  : {}
+              }
+              className={classes.subheader}
+            >
               <ListItemText secondary={category.name} />
             </ListItem>
           </Link>

@@ -12,6 +12,7 @@ export default makeStyles(theme => {
     },
     subheader: {
       height: 30,
+      padding: "8px 0",
       textAlign: "center"
     }
   };
