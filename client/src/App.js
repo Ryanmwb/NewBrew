@@ -8,9 +8,12 @@ import Category from "./pages/category";
 import Sidebar from "./components/sidebar";
 import Background from "../src/assets/wood.jpg";
 
-import "./App.css";
+// import "./App.css";
+
+import useStyles from "./app-styles";
 
 function App() {
+  const classes = useStyles();
   const routes = [
     {
       path: "/",
@@ -27,7 +30,7 @@ function App() {
 
   return (
     <div
-      className="app"
+      className={classes.app}
       style={{
         backgroundImage: `url(${Background})`,
         backgroundSize: "cover",

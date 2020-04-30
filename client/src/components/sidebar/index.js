@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useRouteMatch } from "react-router-dom";
+import classNames from "classnames";
 
 import {
   Divider,
@@ -18,12 +19,15 @@ export default function Sidebar() {
   const classes = useStyles();
   const { categories } = useContext(CategoriesContext);
   const { categoryId } = useParams();
+  const match = useRouteMatch("/");
 
   const routes = [
     {
       path: "/",
       text: "Home",
-      icon: () => <InboxIcon />
+      icon: props => {
+        return <InboxIcon className={_.get(props, "className", "")} />;
+      }
     }
   ];
 
@@ -35,14 +39,29 @@ export default function Sidebar() {
             key={`Sidebar-${index}`}
             to={_.get(route, "path", "")}
             style={{ textDecoration: "none" }}
+            className={classes.link}
           >
-            <ListItem button>
+            <ListItem
+              button
+              className={classNames({
+                [classes.selectedListItem]: _.get(match, "isExact", "")
+              })}
+            >
               {route.icon ? (
                 <ListItemIcon>
-                  <route.icon />
+                  <route.icon
+                    className={classNames({
+                      [classes.selectedText]: _.get(match, "isExact", "")
+                    })}
+                  />
                 </ListItemIcon>
               ) : null}
-              <ListItemText primary={_.get(route, "text", "")} />
+              <ListItemText
+                primary={_.get(route, "text", "")}
+                className={classNames({
+                  [classes.selectedText]: _.get(match, "isExact", "")
+                })}
+              />
             </ListItem>
           </Link>
         );
@@ -52,6 +71,7 @@ export default function Sidebar() {
         <ListItemText primary={"Categories"} />
       </ListItem>
       {categories.map((category, index) => {
+        console.log("test", categoryId == _.get(category, "id", ""));
         return (
           <Link
             key={`Sidebar-categories-${index}`}
@@ -60,14 +80,23 @@ export default function Sidebar() {
           >
             <ListItem
               button
-              style={
-                categoryId == _.get(category, "id", "")
-                  ? { background: "#A85839" }
-                  : {}
-              }
-              className={classes.subheader}
+              className={classNames(classes.subheader, {
+                [classes.selectedListItem]:
+                  categoryId == _.get(category, "id", "")
+              })}
             >
-              <ListItemText secondary={category.name} />
+              <ListItemText
+                secondary={
+                  <span
+                    className={classNames(classes.subheader, {
+                      [classes.selectedText]:
+                        categoryId == _.get(category, "id", "")
+                    })}
+                  >
+                    {category.name}
+                  </span>
+                }
+              />
             </ListItem>
           </Link>
         );

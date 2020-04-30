@@ -16,7 +16,7 @@ import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import useStyles from "./styles";
 
 import { CategoriesContext } from "../../contexts/categories";
-import styles from "../../store/styles";
+import styles from "../../store/beer-styles";
 import srmColors from "../../store/srmColors";
 
 export default function Category() {
@@ -118,7 +118,7 @@ export default function Category() {
                           </div>
                         </Grid>
                         <Grid item>{renderSrm(style)}</Grid>
-                        <Grid item>
+                        <Grid item xs={12}>
                           <Typography
                             variant="body2"
                             className={classes.description}
