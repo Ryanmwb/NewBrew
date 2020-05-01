@@ -5,7 +5,7 @@ export default makeStyles(theme => {
   return {
     root: {
       height: "100vh",
-      background: "#ceb793",
+      background: "#e4c57a",
       textDecoration: "none"
     },
     header: {
@@ -17,7 +17,7 @@ export default makeStyles(theme => {
       textAlign: "center"
     },
     selectedListItem: {
-      background: "#A85839"
+      background: "#8f6e1d"
     },
     selectedText: {
       color: "white"

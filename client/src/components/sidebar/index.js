@@ -71,7 +71,6 @@ export default function Sidebar() {
         <ListItemText primary={"Categories"} />
       </ListItem>
       {categories.map((category, index) => {
-        console.log("test", categoryId == _.get(category, "id", ""));
         return (
           <Link
             key={`Sidebar-categories-${index}`}
