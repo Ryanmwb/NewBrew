@@ -20,31 +20,16 @@ export default makeStyles(theme => {
     beerHeader: {
       borderRadius: 3,
       marginBottom: 8,
-      padding: 8,
-      background: "#f9f3e4",
-      boxShadow:
-        "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);"
+      padding: 8
     },
     headerInnerCont: {
-      display: "flex",
-      justifyContent: "space-between"
+      display: "flex"
     },
-    picture: {
-      height: 80,
-      width: 80
+    beerName: {
+      lineHeight: 1.2
     },
-    beerStatsCont: {
-      marginTop: 4
-    },
-    labelCont: {
-      marginBottom: -8
-    },
-    label: {
-      fontSize: 10,
-      color: "rgba(0,0,0,0.7)"
-    },
-    caption: {
-      fontSize: 14
+    socialMediaCont: {
+      marginLeft: "auto"
     },
     iconCont: {
       height: "100%",
@@ -64,8 +49,42 @@ export default makeStyles(theme => {
     twitterIcon: {
       color: "#1ea1f3"
     },
+    picture: {
+      height: 80,
+      width: 80
+    },
+    beerStatsCont: {
+      marginTop: 4
+    },
+    labelCont: {
+      marginBottom: -8
+    },
+    label: {
+      fontSize: 10,
+      color: "rgba(0,0,0,0.7)"
+    },
+    caption: {
+      fontSize: 14
+    },
+
+    ingredientsCont: {
+      marginTop: 16
+    },
+    description: {
+      textIndent: 30
+    },
     list: {
       margin: 0
+    },
+    panel: {
+      marginTop: 16,
+      background: "#f9f3e4"
+    },
+    panelDetails: {
+      display: "block"
+    },
+    table: {
+      marginBottom: 16
     }
   };
 });

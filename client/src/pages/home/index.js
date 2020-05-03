@@ -4,12 +4,17 @@ import axios from "axios";
 import classNames from "classnames";
 
 import {
-  FormControl,
+  ExpansionPanel,
+  ExpansionPanelDetails,
+  ExpansionPanelSummary,
   Grid,
-  Input,
   InputAdornment,
-  InputLabel,
   Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
   TextField,
   Typography
 } from "@material-ui/core";
@@ -17,13 +22,14 @@ import SearchIcon from "@material-ui/icons/Search";
 import EcoIcon from "@material-ui/icons/Eco";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import TwitterIcon from "@material-ui/icons/Twitter";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import useStyles from "./styles";
 
 export default function Home() {
   const classes = useStyles();
 
-  const [searchText, setSearchText] = useState("bud");
+  const [searchText, setSearchText] = useState("busch");
   const [results, setResults] = useState([]);
 
   useEffect(() => {
@@ -45,7 +51,7 @@ export default function Home() {
       .catch(e => console.log({ e }));
   }
 
-  console.log({ results });
+  // console.log({ results });
 
   return (
     <div className={classes.root}>
@@ -76,7 +82,7 @@ export default function Home() {
                 <div className={classes.beerHeader}>
                   <div className={classes.headerInnerCont}>
                     <div>
-                      <Typography variant="h6">
+                      <Typography variant="h6" className={classes.beerName}>
                         {" "}
                         {_.get(result, "name", "")}
                       </Typography>
@@ -85,24 +91,52 @@ export default function Home() {
                         {_.get(result, "style.name", "")}
                       </Typography>
                     </div>
-                    {_.get(result, "labels.large", "") ? (
-                      <div
-                        className={classes.picture}
-                        style={{
-                          backgroundImage: `url(${_.get(
-                            result,
-                            "labels.large",
-                            ""
-                          )})`,
-                          backgroundSize: "cover",
-                          backgroundPosition: "center"
-                        }}
-                      />
-                    ) : null}
+                    {/* social media here */}
+                    <div className={classes.socialMediaCont}>
+                      <Grid container spacing={2} justify="flex-end">
+                        {renderGridItem({
+                          text: null,
+                          label: null,
+                          Icon: () =>
+                            returnSocialMediaIcon({
+                              result,
+                              searchWord: "facebook",
+                              Icon: () => (
+                                <FacebookIcon
+                                  className={classNames(
+                                    classes.icon,
+                                    classes.fbIcon
+                                  )}
+                                />
+                              )
+                            })
+                        })}
+
+                        {/* twitter */}
+                        {renderGridItem({
+                          text: null,
+                          label: null,
+                          Icon: () =>
+                            returnSocialMediaIcon({
+                              result,
+                              searchWord: "twitter",
+                              Icon: () => (
+                                <TwitterIcon
+                                  className={classNames(
+                                    classes.icon,
+                                    classes.twitterIcon
+                                  )}
+                                />
+                              )
+                            })
+                        })}
+                      </Grid>
+                    </div>
                   </div>
                   <Grid
                     container
-                    justify="space-around"
+                    justify="flex-start"
+                    spacing={4}
                     className={classes.beerStatsCont}
                   >
                     {renderGridItem({
@@ -117,6 +151,10 @@ export default function Home() {
                       text: _.get(result, "servingTemperatureDisplay", ""),
                       label: "Serving Temp"
                     })}
+                    {renderGridItem({
+                      text: _.get(result, "available.name", ""),
+                      label: "Availability"
+                    })}
                     {/* organic */}
                     {renderGridItem({
                       text:
@@ -129,41 +167,6 @@ export default function Home() {
                           ? () => <EcoIcon style={{ color: "green" }} />
                           : null
                     })}
-                    {/* facebook */}
-                    {renderGridItem({
-                      text: null,
-                      label: null,
-                      Icon: () =>
-                        returnSocialMediaIcon({
-                          result,
-                          searchWord: "facebook",
-                          Icon: () => (
-                            <FacebookIcon
-                              className={classNames(
-                                classes.icon,
-                                classes.fbIcon
-                              )}
-                            />
-                          )
-                        })
-                    })}
-                    {renderGridItem({
-                      text: null,
-                      label: null,
-                      Icon: () =>
-                        returnSocialMediaIcon({
-                          result,
-                          searchWord: "twitter",
-                          Icon: () => (
-                            <TwitterIcon
-                              className={classNames(
-                                classes.icon,
-                                classes.twitterIcon
-                              )}
-                            />
-                          )
-                        })
-                    })}
                   </Grid>
                 </div>
                 {_.get(result, "isRetired", "") === "Y" ? (
@@ -171,14 +174,15 @@ export default function Home() {
                     Has been retired
                   </Typography>
                 ) : null}
-                <Typography align="left" variant="body2">
+                <Typography
+                  align="left"
+                  variant="body2"
+                  className={classes.description}
+                >
                   {_.get(result, "description", "")}
                 </Typography>
-                <br />
-                brewery
-                <br />
-                .socialAccounts(array) "link, socialMedia.name"
                 {renderIngredients(result)}
+                {renderBreweryInfo(result)}
               </Paper>
             </Grid>
           );
@@ -186,27 +190,6 @@ export default function Home() {
       </Grid>
     </div>
   );
-
-  function renderIngredients(result) {
-    const ingredientObjs = Object.values(_.get(result, "ingredients", {}));
-    if (!ingredientObjs || ingredientObjs.length === 0) return;
-    return (
-      <div>
-        <Typography variant="h6">Ingredients</Typography>
-        <ul className={classes.list}>
-          {ingredientObjs.map(ingredientArr =>
-            ingredientArr.map(ingredient => (
-              <li key={`HOME-${ingredient.id}`}>
-                <Typography variant="body2">
-                  {_.get(ingredient, "name", "")}
-                </Typography>
-              </li>
-            ))
-          )}
-        </ul>
-      </div>
-    );
-  }
 
   function returnSocialMediaIcon({ result, searchWord, Icon }) {
     const socialAccountsArr = _.get(
@@ -257,5 +240,93 @@ export default function Home() {
       );
     }
     return <Grid item>{renderContent()}</Grid>;
+  }
+
+  function renderIngredients(result) {
+    const ingredientObjs = Object.values(_.get(result, "ingredients", {}));
+    if (!ingredientObjs || ingredientObjs.length === 0) return;
+    return (
+      <div className={classes.ingredientsCont}>
+        <Typography variant="overline">Ingredients</Typography>
+        <ul className={classes.list}>
+          {ingredientObjs.map(ingredientArr =>
+            ingredientArr.map(ingredient => (
+              <li key={`HOME-${ingredient.id}`}>
+                <Typography variant="body2">
+                  {_.get(ingredient, "name", "")}
+                </Typography>
+              </li>
+            ))
+          )}
+        </ul>
+      </div>
+    );
+  }
+
+  function renderBreweryInfo(result) {
+    const brewery = _.get(result, "breweries[0]", "");
+    if (!brewery) return;
+
+    const rows = [
+      {
+        label: "Status:",
+        content:
+          _.get(brewery, "isInBusiness", "") === "Y" ? "Operational" : "Defunct"
+      },
+      {
+        label: "Ownership:",
+        content:
+          _.get(brewery, "isMassOwned", "") === "Y"
+            ? "Publicly Owned"
+            : "Privately Owned"
+      },
+      {
+        label: "Guilds:",
+        content: _.get(brewery, "guilds", []).map(guild => (
+          <li>{_.get(guild, "name", "")}</li>
+        ))
+      }
+    ];
+
+    const locations = _.get(brewery, "locations", []);
+
+    console.log({ locations });
+
+    return (
+      <ExpansionPanel className={classes.panel}>
+        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+          <Typography className={classes.heading}>Brewery</Typography>
+        </ExpansionPanelSummary>
+        <ExpansionPanelDetails className={classes.panelDetails}>
+          <Typography variant="caption" display="block" gutterBottom>
+            {_.get(brewery, "description", "")}
+          </Typography>
+          <Typography variant="h6">Details</Typography>
+
+          <Table size="small" className={classes.table}>
+            <TableBody>
+              {rows.map(row => (
+                <TableRow>
+                  <TableCell>{row.label}</TableCell>
+                  <TableCell>{row.content}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+
+          <Typography variant="h6">Locations</Typography>
+          <Table size="small" className={classes.table}>
+            <TableBody>
+              {rows.map(row => (
+                <TableRow>
+                  <TableCell>{row.label}</TableCell>
+                  <TableCell>{row.content}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </ExpansionPanelDetails>
+      </ExpansionPanel>
+    );
   }
 }
