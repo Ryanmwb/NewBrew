@@ -4,9 +4,13 @@ export default makeStyles(theme => {
   return {
     root: {
       height: "100vh",
-      padding: "0 16px",
+      padding: 16,
       overflow: "auto",
       background: "#edd8a5"
+    },
+    textField: {
+      background: "white",
+      borderRadius: 4
     },
     beerCont: {
       background: "#f5eacf",
@@ -31,6 +35,37 @@ export default makeStyles(theme => {
     },
     beerStatsCont: {
       marginTop: 4
+    },
+    labelCont: {
+      marginBottom: -8
+    },
+    label: {
+      fontSize: 10,
+      color: "rgba(0,0,0,0.7)"
+    },
+    caption: {
+      fontSize: 14
+    },
+    iconCont: {
+      height: "100%",
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center"
+    },
+    icon: {
+      height: 32,
+      width: 32,
+      cursor: "pointer"
+    },
+    fbIcon: {
+      color: "#1673eb"
+    },
+    twitterIcon: {
+      color: "#1ea1f3"
+    },
+    list: {
+      margin: 0
     }
   };
 });

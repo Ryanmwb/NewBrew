@@ -15,10 +15,10 @@ router.post("/api", async (req, res, next) => {
       ? `&q=${query}&type=beer&withBreweries=Y&withGuilds=Y&withIngredients=Y&withSocialAccounts=Y`
       : "";
     //
-    const axiosResponse = axios.get(
+
+    const axiosResponse = await axios.get(
       `${baseUrl}/${route}/?key=${process.env.BREW_API_KEY}${q}`
     );
-
     res.json(_.get(axiosResponse, "data.data", "")).status(200);
   } catch (e) {
     console.log({ e });
