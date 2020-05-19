@@ -24,10 +24,13 @@ import FacebookIcon from "@material-ui/icons/Facebook";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
+import useData from "./data";
 import useStyles from "./styles";
 
 export default function Home() {
   const classes = useStyles();
+  const data = useData();
+  console.log({ data });
 
   const [searchText, setSearchText] = useState("busch");
   const [results, setResults] = useState([]);
@@ -50,8 +53,6 @@ export default function Home() {
       })
       .catch(e => console.log({ e }));
   }
-
-  // console.log({ results });
 
   return (
     <div className={classes.root}>
@@ -289,8 +290,6 @@ export default function Home() {
     ];
 
     const locations = _.get(brewery, "locations", []);
-
-    console.log({ locations });
 
     return (
       <ExpansionPanel className={classes.panel}>

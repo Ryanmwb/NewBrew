@@ -1,0 +1,36 @@
+version: "3"
+services:
+  prisma:
+    image: prismagraphql/prisma:1.34
+    restart: always
+    ports:
+      - "4466:4466"
+    environment:
+      PRISMA_CONFIG: |
+        port: 4466
+        # uncomment the next line and provide the env var PRISMA_MANAGEMENT_API_SECRET=my-secret to activate cluster security
+        # managementApiSecret: my-secret
+        databases:
+          default:
+            connector: postgres
+            host: ${DB_HOST}
+            database: ${DB_NAME}
+            schema: public
+            user: ${DB_USER}
+            password: ${DB_PASSWORD}
+            ssl: true
+            rawAccess: true
+            port: '5432'
+            migrations: true
+
+# @Name	Database representation	Arguments	Description
+# @id	PRIMARY KEY	-	Defines a single-field ID on the model.
+# @@id	PRIMARY KEY	A list of field references	Defines a multi-field ID on the model.
+# @default	DEFAULT	An expression (e.g. 5, true, now())	Defines a default value for this field. @default takes an expression as an argument.
+# @unique	UNIQUE	-	Defines a unique constraint for this field.
+# @@unique	UNIQUE	A list of field references	Defines a compound unique constraint for the specified fields.
+# @@index	INDEX	A list of field references	Defines an index.
+# @relation	FOREIGN KEY / REFERENCES	A name and/or a list of field references	Defines meta information about the relation. Learn more.
+# @map	n/a	The name of the target database column	Maps a field name from the Prisma schema to a different column name.
+# @@map	n/a	The name of the target database table	Maps a model name from the Prisma schema to a differenttable name.
+# @updatedAt	n/a	-	Automatically stores the time when a record was last updated.

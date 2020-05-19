@@ -1,0 +1,31 @@
+type User {
+  id: ID! @id
+  name: String!
+  lastName: String! @default("last")
+}
+
+type Book {
+  id: ID! @id
+  name: String!
+  location: String
+  image: String
+}
+
+type Post {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  title: String!
+  published: Boolean! @default(value: false)
+  categories: [Category]
+}
+
+type Category {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  name: String!
+  posts: [Post]
+}
+
+
