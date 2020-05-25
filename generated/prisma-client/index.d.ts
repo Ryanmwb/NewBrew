@@ -255,6 +255,8 @@ export type UserOrderByInput =
   | "id_DESC"
   | "name_ASC"
   | "name_DESC"
+  | "username_ASC"
+  | "username_DESC"
   | "lastName_ASC"
   | "lastName_DESC";
 
@@ -356,6 +358,20 @@ export interface UserWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
+  username?: Maybe<String>;
+  username_not?: Maybe<String>;
+  username_in?: Maybe<String[] | String>;
+  username_not_in?: Maybe<String[] | String>;
+  username_lt?: Maybe<String>;
+  username_lte?: Maybe<String>;
+  username_gt?: Maybe<String>;
+  username_gte?: Maybe<String>;
+  username_contains?: Maybe<String>;
+  username_not_contains?: Maybe<String>;
+  username_starts_with?: Maybe<String>;
+  username_not_starts_with?: Maybe<String>;
+  username_ends_with?: Maybe<String>;
+  username_not_ends_with?: Maybe<String>;
   lastName?: Maybe<String>;
   lastName_not?: Maybe<String>;
   lastName_in?: Maybe<String[] | String>;
@@ -431,6 +447,7 @@ export interface CategoryCreateWithoutPostsInput {
 
 export interface UserUpdateManyMutationInput {
   name?: Maybe<String>;
+  username?: Maybe<String>;
   lastName?: Maybe<String>;
 }
 
@@ -497,6 +514,7 @@ export interface CategoryWhereInput {
 export interface UserCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
+  username?: Maybe<String>;
   lastName: String;
 }
 
@@ -623,6 +641,7 @@ export interface PostUpdateManyDataInput {
 
 export interface UserUpdateInput {
   name?: Maybe<String>;
+  username?: Maybe<String>;
   lastName?: Maybe<String>;
 }
 
@@ -839,6 +858,7 @@ export interface NodeNode {
 export interface UserPreviousValues {
   id: ID_Output;
   name: String;
+  username?: String;
   lastName: String;
 }
 
@@ -847,6 +867,7 @@ export interface UserPreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
+  username: () => Promise<String>;
   lastName: () => Promise<String>;
 }
 
@@ -855,6 +876,7 @@ export interface UserPreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
+  username: () => Promise<AsyncIterator<String>>;
   lastName: () => Promise<AsyncIterator<String>>;
 }
 
@@ -1401,12 +1423,14 @@ export interface BookPreviousValuesSubscription
 export interface User {
   id: ID_Output;
   name: String;
+  username?: String;
   lastName: String;
 }
 
 export interface UserPromise extends Promise<User>, Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
+  username: () => Promise<String>;
   lastName: () => Promise<String>;
 }
 
@@ -1415,6 +1439,7 @@ export interface UserSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
+  username: () => Promise<AsyncIterator<String>>;
   lastName: () => Promise<AsyncIterator<String>>;
 }
 
@@ -1423,6 +1448,7 @@ export interface UserNullablePromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
+  username: () => Promise<String>;
   lastName: () => Promise<String>;
 }
 

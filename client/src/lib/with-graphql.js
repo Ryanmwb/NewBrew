@@ -1,7 +1,8 @@
-import { ApolloClient, InMemoryCache, HttpLink } from "apollo-boost";
+import { ApolloClient, InMemoryCache } from "apollo-boost";
+import { createHttpLink } from "apollo-link-http";
 
-const link = HttpLink({
-  uri: "https://brewbuddy-heroku-db-95f87bb644.herokuapp.com",
+const link = createHttpLink({
+  uri: `${process.env.REACT_APP_PRISMA_ENDPOINT}`,
   credentials: "same-origin"
 });
 
@@ -9,8 +10,5 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
   link
 });
-// const client = new ApolloClient({
-//   uri: "https://brewbuddy-heroku-db-95f87bb644.herokuapp.com"
-// });
 
 export default client;

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import _ from "lodash";
 import axios from "axios";
 import classNames from "classnames";
+import { useQuery } from "@apollo/react-hooks";
+import gql from "graphql-tag";
 
 import {
   ExpansionPanel,
@@ -13,7 +15,6 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableHead,
   TableRow,
   TextField,
   Typography
@@ -30,13 +31,18 @@ import useStyles from "./styles";
 export default function Home() {
   const classes = useStyles();
   const data = useData();
-  console.log({ data });
 
   const [searchText, setSearchText] = useState("busch");
   const [results, setResults] = useState([]);
+  const [didSetState, setDidSetState] = useState(false);
+
+  // client.writeData({ data: { visibilityFilter: "value here" } });
+  console.log({ data });
 
   useEffect(() => {
     search();
+    // data.client.writeData({ data: { visibilityFilter: "value here" } });
+    setDidSetState(true);
   }, []);
 
   function search() {
@@ -53,6 +59,9 @@ export default function Home() {
       })
       .catch(e => console.log({ e }));
   }
+
+  // onClick={() => client.writeData({ data: { visibilityFilter: filter } })}
+  // active={data.visibilityFilter === filter}
 
   return (
     <div className={classes.root}>

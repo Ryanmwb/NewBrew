@@ -10,8 +10,16 @@ const USERS = gql`
   }
 `;
 
+const GET_VISIBILITY_FILTER = gql`
+  query {
+    visibilityFilter @client
+  }
+`;
+//   const { data, client } = useQuery(GET_VISIBILITY_FILTER);
+
 export default function useData(props = {}) {
   const { data: users } = useQuery(USERS, props);
+  const { data: visability, client } = useQuery(GET_VISIBILITY_FILTER, props);
 
-  return { users };
+  return { users, visability, client };
 }
